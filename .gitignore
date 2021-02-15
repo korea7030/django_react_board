@@ -1,0 +1,3 @@
+backend/*/__pycache__/
+backend/root/settings.ini
+backend/*/migrations/__pycache__/
