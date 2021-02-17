@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Comment
+from .models import Post, Comment, AttachmentFile
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,4 +31,23 @@ class PostCommentSerializer(serializers.ModelSerializer):
     def get_parent_comments(self, obj):
         parent_comments = obj.comments.filter(parent=None)
         serializer = CommentSerializer(parent_comments, many=True)
+        return serializer.data
+
+
+class AttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AttachmentFile
+        fields = ('id', 'post', 'user', 'created_at')
+        read_only_fields = ['user']
+
+
+class PostAttachmentSerializer(serializers.ModelSerializer):
+    attachment = serializers.SerializerMethodField()
+    class Meta:
+        model = Post
+        fields = ('id', 'attachment')
+
+    def get_attachment(self, obj):
+        attachments = obj.attachments.all()
+        serializer = AttachmentSerializer(attachments, many=True)
         return serializer.data

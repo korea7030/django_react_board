@@ -26,3 +26,12 @@ class Comment(models.Model):
     parent = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE)
     comment = models.CharField(max_length=100, default='')
     created_at = models.DateTimeField('생성시간', auto_now_add=True)
+
+
+class AttachmentFile(models.Model):
+    '''
+    게시글 파일
+    '''
+    post = models.ForeignKey(Post, related_name='attachments', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='attachments', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
