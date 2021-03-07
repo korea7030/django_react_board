@@ -23,9 +23,17 @@ class Comment(models.Model):
     '''
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, related_name='comments', on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', related_name='reply', on_delete=models.CASCADE, null=True, blank=True)
     comment = models.CharField(max_length=100, default='')
     created_at = models.DateTimeField('생성시간', auto_now_add=True)
+
+    @property
+    def is_reply(self):
+        return self.reply_id is not None
+
+    @property
+    def has_replies(self):
+        return self.replies.exists()
 
 
 class AttachmentFile(models.Model):

@@ -1,17 +1,19 @@
-import React from 'react';
+import React, {createContext} from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from "mobx-react";
-import rootStore from "../src/stores/rootStore";
-
-// import './index.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import App from './App';
+import RootStore from './store';
+
+const store = RootStore.create({});
+
+export const StoreContext = createContext(store);
 
 ReactDOM.render(
-    <Provider {...rootStore} >
-      <React.StrictMode>
+    <React.StrictMode>
+      <StoreContext.Provider value={store}>
+        <CssBaseline/>
         <App />
-      </React.StrictMode>
-    </Provider>, 
-    document.getElementById('root')
-  
+      </StoreContext.Provider>
+    </React.StrictMode>,
+    document.getElementById('root')  
 );

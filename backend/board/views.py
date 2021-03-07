@@ -41,7 +41,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsCommentOwnerOrReadOnly]
-
+    
     def perform_create(self, serializer):
         # frontend 구현시 고쳐야 할 부분
         data = self.request.data

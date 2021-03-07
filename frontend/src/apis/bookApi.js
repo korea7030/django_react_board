@@ -1,9 +1,10 @@
 import http from '../http-common';
 
 
-export default class BookApi {
+class BookApi {
     getPostAll = async () => {
-        return await http.get("post");
+        const response = await http.get("boards/post");
+        return response['data'];
     };
     
     createPost = async(data) => {
@@ -11,14 +12,21 @@ export default class BookApi {
     }
     
     detailPost = async(id) => {
-        return await http.get(`post/${id}`);
+        return await http.get(`boards/post/${id}`);
     }
     
     updatePost = async(id, data) => {
-        return await http.put(`post/${id}`, data);
+        return await http.put(`boards/post/${id}`, data);
     }
     
     deletePost = async(id) => {
-        return await http.delete(`post/${id}`);
+        return await http.delete(`boards/post/${id}`);
+    }
+
+    getComment = async(id) => {
+        const response = await http.get(`boards/view/comment/${id}`);
+        return response['data']
     }
 }
+
+export default new BookApi();
